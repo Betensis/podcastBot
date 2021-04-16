@@ -51,6 +51,9 @@ async def common_message(mes: types.Message):
             str(mes.text),
             f"media/{mes.chat.id}",
         )
+    except KeyError:
+        mes.answer('Видимо вы отправили ссылку на '
+                   'незаконченную трансляцию.... не надо так')
     except yt_exceptions.VideoPrivate as err:
         mes.answer("Видео находится в приватном доступе")
         logger.info(err)
