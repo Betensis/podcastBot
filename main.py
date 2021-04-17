@@ -76,7 +76,7 @@ async def common_message(mes: types.Message):
 
     try:
         await mes.answer_audio(types.InputFile(file_path))
-    except aiogram.exceptions.NetworkError:
+    except aiogram.exceptions.NetworkError as err:
         await mes.answer(
             "Слишком длинное и тяжелое видео... " +
             "телеграм не может такое отправить"
