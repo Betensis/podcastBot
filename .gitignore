@@ -140,4 +140,4 @@ cython_debug/
 
 media/
 log/
-config/config.py
+conf/settings.py

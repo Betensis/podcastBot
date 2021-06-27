@@ -1,38 +1,30 @@
 import os
 import datetime
 
-from config.config import TELEGRAM_TOKEN, MEDIA_DIR, LOG_DIR, LOGGING_LVL
-from validators import url_validator
-from youtube import download_yt_video
+from conf.settings import LOGGING_SETTINGS, TELEGRAM_TOKEN
+from libs.validators import is_url
+from libs.youtube import download_yt_video
+from libs.file_system import FileSystem
 
 from pytube import exceptions as yt_exceptions
-from asyncio import Lock
 from loguru import logger
 from aiogram import Bot, Dispatcher, executor, types
 import aiogram
 
+file_sys = FileSystem()
+file_sys.create_file_struct()
 
-MEDIA_DIR.mkdir(exist_ok=True)
-LOG_DIR.mkdir(exist_ok=True)
-
-bot_log_dir = LOG_DIR.joinpath(f"bot{datetime.date.today()}")
+bot_log_dir = file_sys.LOG_DIR.joinpath(f"bot{datetime.date.today()}")
 
 bot_log_dir.mkdir(exist_ok=True)
 
 logger.add(
     bot_log_dir / "bot.json",
-    level=LOGGING_LVL,
-    rotation="100 MB",
-    serialize=True,
-    compression="zip",
-    backtrace=True,
-    catch=True,
+    **LOGGING_SETTINGS
 )
 
 bot = Bot(token=TELEGRAM_TOKEN)
 dp = Dispatcher(bot)
-
-media_file_lock = Lock()
 
 
 @dp.message_handler(commands=["start"])
@@ -42,7 +34,7 @@ async def start_message(mes: types.Message):
 
 @dp.message_handler()
 async def common_message(mes: types.Message):
-    if not url_validator(mes.text):
+    if not is_url(mes.text):
         await mes.answer("Отправьте ссылку, а не вот это")
         return
 
@@ -92,4 +84,4 @@ async def common_message(mes: types.Message):
 
 
 if __name__ == "__main__":
-    executor.start_polling(dp, skip_updates=True)
+    executor.start_polling(dp)
