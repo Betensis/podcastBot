@@ -63,6 +63,8 @@ async def common_message(mes: types.Message):
         await mes.answer("Видео недоступно по хз какой причине")
         logger.info(f"Video Unavaible: |{mes.text=}|{err=}|{mes.chat.id=}")
         return
+    except Exception as e:
+        await mes.answer(str(e))
 
     await mes.answer("Видео скачано, отправляю...")
 
@@ -74,6 +76,8 @@ async def common_message(mes: types.Message):
             "телеграм не может такое отправить"
         )
         logger.info(f'Video too large: |{mes.text=}|{err=}|{mes.chat.id=}')
+    except Exception as e:
+        await mes.answer(str(e))
     finally:
         # delete audio file
         try:
