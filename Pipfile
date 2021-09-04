@@ -10,6 +10,7 @@ loguru = "0.5.3"
 
 [dev-packages]
 autopep8 = "*"
+rope = "*"
 
 [requires]
 python_version = "3.9"
