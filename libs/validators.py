@@ -2,7 +2,7 @@ import re
 
 
 def is_url(url: str) -> bool:
-    """ это работает и дадада я не знаю почему """
+    """это работает и дадада я не знаю почему"""
 
     ul = "\u00a1-\uffff"  # unicode letters range (must not be a raw string)
 
@@ -14,8 +14,7 @@ def is_url(url: str) -> bool:
 
     # Host patterns
     hostname_re = (
-        r"[a-z" + ul + r"0-9](?:[a-z" + ul +
-        r"0-9-]{0,61}[a-z" + ul + r"0-9])?"
+        r"[a-z" + ul + r"0-9](?:[a-z" + ul + r"0-9-]{0,61}[a-z" + ul + r"0-9])?"
     )
     domain_re = (
         r"(?:\.(?!-)[a-z" + ul + r"0-9-]{1,63}(?<!-))*"
