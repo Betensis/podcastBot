@@ -4,9 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-aiogram = "2.12.1"
 pytube = "10.7.1"
 loguru = "0.5.3"
+aiogram = "*"
 
 [requires]
 python_version = "3.9"
