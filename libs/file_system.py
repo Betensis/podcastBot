@@ -15,7 +15,7 @@ class FileSystem(metaclass=SingletonMeta):
 
     def __is_settings_var(var: tuple[str, Any]) -> bool:
         name_var, key_var = var[0], var[1]
-        return name_var.endswith(('_FILE', '_DIR'))
+        return name_var.endswith(("_FILE", "_DIR"))
 
     def get_settings_vars() -> dict[str, Any]:
         return dict(filter(FileSystem.__is_settings_var, settings.__dict__.items()))
@@ -27,7 +27,8 @@ class FileSystem(metaclass=SingletonMeta):
         setting_vars = FileSystem.get_settings_vars()
         if not all(map(lambda x: isinstance(x, Path), setting_vars.values())):
             raise SettingsException(
-                "_FILE and _DIR variables type should be pathlib.Path")
+                "_FILE and _DIR variables type should be pathlib.Path"
+            )
 
         for value_var in setting_vars.values():
             value_var.mkdir(parents=True, exist_ok=True)
