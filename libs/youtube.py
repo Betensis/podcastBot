@@ -58,7 +58,7 @@ async def install_file(mes: types.Message) -> Optional[str]:
     try:
         file_path = await download_yt_video(
             str(mes.text),
-            f"media/{datetime.datetime.now()}",
+            f"media/{datetime.date.today()}",
         )
     except KeyError as err:
         await mes.answer(
