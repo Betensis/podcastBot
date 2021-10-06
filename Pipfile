@@ -12,4 +12,4 @@ aiogram = "2.14.3"
 python_version = "3.9"
 
 [dev-packages]
-black = "*"
+black = "21.8b0"
