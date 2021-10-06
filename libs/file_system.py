@@ -13,12 +13,14 @@ class FileSystem(metaclass=SingletonMeta):
     def __init__(self) -> None:
         self.__dict__.update(FileSystem.get_settings_vars())
 
-    def __is_settings_var(var: tuple[str, Any]) -> bool:
+    @classmethod
+    def __is_settings_var(cls, var: tuple[str, Any]) -> bool:
         name_var, key_var = var[0], var[1]
         return name_var.endswith(("_FILE", "_DIR"))
 
-    def get_settings_vars() -> dict[str, Any]:
-        return dict(filter(FileSystem.__is_settings_var, settings.__dict__.items()))
+    @classmethod
+    def get_settings_vars(cls) -> dict[str, Any]:
+        return dict(filter(cls.__is_settings_var, settings.__dict__.items()))
 
     def create_file_struct(self, exist_ok: bool = True) -> None:
         if not exist_ok and FileSystem.struct_is_created:
